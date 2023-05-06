@@ -12,8 +12,14 @@ class Movies extends Component {
         this.setState({movies}) //this.setState({movies: movies}) --if key and value property same...just write like back 
     };
 
-    handleLike=()=>{
-        console.log('Like clicked');
+    handleLike=(movie)=>{
+        // console.log('Like clicked',movie);
+        const movies =[...this.state.movies];
+        const index = movies.indexOf(movie);
+        movies[index] = {...movies[index]};
+        movies[index].liked= !movies[index].liked;
+        this.setState({movies});
+
     };
 
     render() { 
@@ -46,7 +52,7 @@ class Movies extends Component {
                     <td>{movie.numberInStock}</td>
                     <td>{movie.dailyRentalRate}</td>
                     <td>
-                        <Like liked={movie.liked} onClick={this.handleLike}
+                        <Like liked={movie.liked} onClick={()=>this.handleLike(movie)}
                         
                         />
                     </td>

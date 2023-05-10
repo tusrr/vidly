@@ -14,7 +14,7 @@ const Like = (props) => {
 }
  
 export default Like;
-
+ 
 // class Like extends Component {
 //     render() { 
         

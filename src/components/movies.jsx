@@ -5,7 +5,8 @@ import Like from './common/like';
 class Movies extends Component {
     state = { 
         movies: getMovies(),
-        pageSize:10
+        currentPage: 1,
+        pageSize:3
      } 
 
      handleDelete = (movie) =>{
@@ -25,11 +26,13 @@ class Movies extends Component {
     };
 
     handlePageChange=(page) =>{
-    console.log(page);
+    this.setState({currentPage:page});
 }
 
     render() { 
         const {length: count} = this.state.movies;
+        const {currentPage, pageSize} = this.state;
+
 
         if(count ===0)
         return <p>There are no movies in the database.</p>;
@@ -52,15 +55,13 @@ class Movies extends Component {
             </thead>
             <tbody>
                 {this.state.movies.map(movie=>(
-                <tr key="movie._id  ">
+                <tr key={movie._id}>
                     <td>{movie.title}</td>
                     <td>{movie.genre.name}</td>
                     <td>{movie.numberInStock}</td>
                     <td>{movie.dailyRentalRate}</td>
                     <td>
-                        <Like liked={movie.liked} onClick={()=>this.handleLike(movie)}
-                        
-                        />
+                        <Like liked={movie.liked} onClick={()=>this.handleLike(movie)}/>
                     </td>
                     <td><button onClick={() => this.handleDelete(movie)} 
                     className="btn btn-danger">Delete</button></td>
@@ -70,7 +71,8 @@ class Movies extends Component {
         </table>
         <Pagination 
         itemsCount = {count} 
-        pageSize= {this.state.pageSize} 
+        pageSize= {pageSize} 
+        currentPage= {currentPage} 
         onPageChange= {this.handlePageChange}/>
         </React.Fragment> 
     )}
